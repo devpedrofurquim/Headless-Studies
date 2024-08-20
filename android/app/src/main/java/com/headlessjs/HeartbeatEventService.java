@@ -10,12 +10,14 @@ import com.facebook.react.jstasks.HeadlessJsTaskConfig;
 
 public class HeartbeatEventService extends HeadlessJsTaskService {
     @Nullable
+    @Override
     protected HeadlessJsTaskConfig getTaskConfig(Intent intent) {
         Bundle extras = intent.getExtras();
         return new HeadlessJsTaskConfig(
                 "Heartbeat",
                 extras != null ? Arguments.fromBundle(extras) : Arguments.createMap(),
                 5000,
-                true);
+                true
+        );
     }
 }

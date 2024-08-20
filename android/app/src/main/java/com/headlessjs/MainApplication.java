@@ -17,6 +17,8 @@ import android.content.IntentFilter;
 import android.os.Build;
 import org.jetbrains.annotations.Nullable;
 
+import com.headlessjs.HeartbeatPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =

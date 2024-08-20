@@ -1,8 +1,8 @@
 import React from 'react';
 import { AppRegistry } from 'react-native';
-import { HeartBeatProvider } from './HeartBeatContext';
-import MainApp from './MainApp';
+import App from './App';
 import { name as appName } from './app.json';
+import MyHeadlessTask from './src/HeartBeat';
 
 const App = () => (
   <HeartBeatProvider>
@@ -10,4 +10,5 @@ const App = () => (
   </HeartBeatProvider>
 );
 
+AppRegistry.registerHeadlessTask('Heartbeat', () => MyHeadlessTask);
 AppRegistry.registerComponent(appName, () => App);
