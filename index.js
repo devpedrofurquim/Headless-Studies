@@ -1,12 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
-import MyHeadlessTask from './src/HeartBeat';
-import MainApp from './MainApp';
+import Heartbeat from './Heartbeat.js';
+import Home from './Home.js';
 
-const App = () => (
-    <MainApp/>
-);
+const App = () => {
+    
+    useEffect(() => {
+        console.log('App is fully loaded');
+    }, []);
+
+    return (
+        <Home/>
+    )
+}
 
 AppRegistry.registerComponent(appName, () => App);
-AppRegistry.registerHeadlessTask('Heartbeat', () => MyHeadlessTask);
+AppRegistry.registerHeadlessTask('Heartbeat', () => Heartbeat);

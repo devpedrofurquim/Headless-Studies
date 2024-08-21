@@ -17,6 +17,5 @@ public void onReceive(Context context, Intent intent) {
         //log("Starting the service in < 26 Mode from a BroadcastReceiver")
         context.startService(new Intent(context, HeartbeatService.class));
     }
-
-}
+  }
 }

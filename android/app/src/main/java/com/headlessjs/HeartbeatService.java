@@ -11,8 +11,6 @@ import androidx.core.app.NotificationCompat;
 import android.app.NotificationManager;
 import android.app.NotificationChannel;
 import android.os.Build;
-
-
 import com.facebook.react.HeadlessJsTaskService;
 
 public class HeartbeatService extends Service {
@@ -31,13 +29,14 @@ public class HeartbeatService extends Service {
             handler.postDelayed(this, 2000);
         }
     };
+
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "HEARTBEAT", importance);
-            channel.setDescription("CHANEL DESCRIPTION");
+            channel.setDescription("CHANNEL DESCRIPTION");
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
@@ -51,7 +50,6 @@ public class HeartbeatService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
     }
 
     @Override
@@ -65,7 +63,15 @@ public class HeartbeatService extends Service {
         this.handler.post(this.runnableCode);
         createNotificationChannel();
         Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        // Use FLAG_IMMUTABLE
+        PendingIntent contentIntent = PendingIntent.getActivity(
+            this,
+            0,
+            notificationIntent,
+            PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_CANCEL_CURRENT
+        );
+
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Heartbeat service")
                 .setContentText("Running...")
@@ -73,8 +79,8 @@ public class HeartbeatService extends Service {
                 .setContentIntent(contentIntent)
                 .setOngoing(true)
                 .build();
+
         startForeground(SERVICE_NOTIFICATION_ID, notification);
         return START_STICKY;
     }
-
 }
